@@ -1,0 +1,98 @@
+@charset  "UTF-8";
+
+:root {
+    --background: #161622;
+    --color1: #309BFF;
+    --color2: #3F7DE8;
+    --color3: #6D94CE;
+}
+
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(202, 198, 198);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.calculator-container {
+    background-color: var(--background);
+    display: flex;
+    width: 350px;
+    border-radius: 5px;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 2px 2px 10px  black;
+}
+
+.calculator-container > .output {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 2em;
+    width: 100%;
+    height: 100px;
+    background-color: #e5e4e6;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.479);
+    padding: 2px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+    padding: 5px;
+}
+
+.buttons-container > .rows {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.rows > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    border-radius: 5px;
+    height: 60px;
+    font-size: 1.8em;
+    background-color: transparent;
+    color: #e5e4e3;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    border: none;
+    box-shadow: 1px 1px 3px var(--color2);
+}
+
+.rows > .operator-buttons {
+    color: var(--color1);
+    font-size: bolder;
+}
+
+.rows > button.flex-2 {
+    flex: 2;
+}
+
+button:hover {
+    background-color: #35355a;
+}
+
+button:active {
+   transform: scale(0.95);
+   box-shadow: 0px 0px 2px var(--color2);
+}
