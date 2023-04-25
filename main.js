@@ -1,36 +1,134 @@
-let output = document.querySelector("#output");
-let numsBtn = document.querySelectorAll(".nums");
-let clearBtn = document.querySelector("#clear");
-let clearAllBtn = document.querySelector("#clearAll");
-let currentNumber = "0";
-let holdNumber = 0;
-console.log(numsBtn);
-
-const updateOutput = (number) => {
-    output.textContent = number;
+const output = document.querySelector("#outputCurrent");
+const previusOperation = document.querySelector("#outputHold");
+const numsBtn = document.querySelectorAll(".nums");
+const clearBtn = document.querySelector("#clear");
+const clearAllBtn = document.querySelector("#reseat");
+const operatorBtns = document.querySelectorAll(".operator");
+const result = document.querySelector("#result");
+const dotBtn = document.querySelector("#dotBtn");
+const operations = {
+    sum : (a, b) => a + b,
+    subtract : (a, b) => a - b,
+    multiply : (a, b) => decimalAjust(a * b),
+    divide :  (a, b) =>  decimalAjust(a / b),
+    porcentage : (a, b) =>  decimalAjust((a / 100) * b)
 }
 
-const getNumber = (e) => {
-    if (currentNumber == "0") {currentNumber = ""};
-    currentNumber += e.target.textContent;
-    updateOutput(currentNumber)
+let holdNumber = null;
+let currentNumber = "";
+let currentOperator = null;
+
+const keybordInput = (e) => {
+    if (e.key >= 0 || e.key <= 9) {addNumber(e.key)}
+    if (e.key == "Backspace") {clear()};
+    if (e.key == "Enter" || e.key == "=") {finishOperation()};
+    if (e.key == ".") {addDot()};
+    if (e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/" || e.key == "%") {
+        selectOperator(e.key)
+    }
 }
 
-const clear = () => {
-    currentNumber = currentNumber.split("").filter((num, index) => index == currentNumber.length -1 ? false : true).join("");
-    if (currentNumber == "") {
-        currentNumber = "0"
-    };
-    updateOutput(currentNumber)
-}
-
-const clearAll = () => {
-    currentNumber = "0";
+const addNumber = (num) => {
+    currentNumber += num;
     updateOutput(currentNumber);
 }
 
-numsBtn.forEach(num => num.addEventListener("click", getNumber))
-clearBtn.addEventListener("click", clear);
-clearAllBtn.addEventListener("click", clearAll);
+const addDot = () => {
+    if (currentNumber.includes(".") || !currentNumber) {
+        return
+    }
+    currentNumber += ".";
+    updateOutput(currentNumber)
+}
 
-updateOutput(currentNumber);
+const convertOperator = (operator) => {
+    switch (operator) {
+        case "+":
+            return "sum"
+        case "-":
+            return "subtract"
+        case "*":
+            return "multiply"
+        case "/": 
+            return "divide"
+        case "%":
+            return "porcentage"
+    }
+}
+
+function execute (a, b, operator) {
+    if (!b) {return}
+    b = Number(b)
+    holdNumber = operations[convertOperator(operator)](a, b);
+    updateOutput(holdNumber)
+}
+
+function selectOperator (operator) {
+    currentOperator = operator;
+    if (holdNumber == null) {
+        holdNumber = Number(output.innerText)
+        currentNumber = "";
+    }
+    if (currentOperator) {
+        execute(holdNumber, currentNumber, currentOperator)
+    }
+    currentNumber = "";
+    updatePrevius()
+}
+
+const updateOutput = (number) => {
+    if (number == "") {
+        output.innerText = "0"
+    } else {
+        output.innerText = number;
+    }
+}
+
+const updatePrevius = () =>  {
+    if (holdNumber != null) {
+        previusOperation.innerHTML = holdNumber + " " +  currentOperator ;
+    } else {
+        previusOperation.textContent = "";
+    }
+}
+
+const decimalAjust = (num) =>  {
+    return Math.round(num * 1000) / 1000;
+}
+
+const clear = () => {
+    currentNumber = output.innerText;
+    currentNumber = currentNumber.split("")
+    .filter((num, index) => index == currentNumber.length -1 ? false: true)
+    .join("");
+    output.innerText = "";
+    updateOutput(currentNumber);
+}
+
+const reseat = () => {
+    holdNumber = null;
+    currentOperator = null;
+    currentNumber = "";
+    updatePrevius();
+    updateOutput(currentNumber)
+}
+
+const finishOperation = () => {
+    if (currentOperator) {
+        execute(holdNumber, currentNumber, currentOperator);
+        previusOperation.innerText += ` ${currentNumber} = ${holdNumber}`
+    }
+    holdNumber = null;
+    currentNumber = output.innerText;
+    currentOperator = null;
+}
+
+numsBtn.forEach(num => num.addEventListener("click", (e) => addNumber(e.target.innerText)));
+operatorBtns.forEach(btn => 
+    btn.addEventListener("click", (e) => selectOperator(e.target.id)));
+result.addEventListener("click", finishOperation)
+clearBtn.addEventListener("click", clear);
+clearAllBtn.addEventListener("click", reseat);
+dotBtn.addEventListener("click", addDot);
+window.addEventListener("keydown", keybordInput)
+updateOutput(0);

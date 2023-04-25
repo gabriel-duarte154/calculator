@@ -12,41 +12,44 @@
 <body>
     <div class="main">
         <div class="calculator-container">
-            <div class="output" id="output"></div>
+            <div class="output" id="output">
+                <span id="outputHold"></span>
+                <span id="outputCurrent"></span>
+            </div>
 
             <div class="buttons-container">
                 <div class="rows">
-                    <button class="operator-buttons" id="clearAll">C</button>
+                    <button class="operator-buttons" id="reseat">C</button>
                     <button class="operator-buttons" id="clear">&leftarrow;</button>
-                    <button class="operator-buttons">&#37</button>
-                    <button class="operator-buttons">&divide</button>
+                    <button class="operator-buttons operator" id="%">%</button>
+                    <button class="operator-buttons operator" id="/">÷</button>
                 </div>
 
                 <div class="rows">
                     <button class="nums">7</button>
                     <button class="nums">8</button>
                     <button class="nums">9</button>
-                    <button class="operator-buttons">&times;</button>
+                    <button class="operator-buttons operator" id="*">×</button>
                 </div>
 
                 <div class="rows">
                     <button class="nums">4</button>
                     <button class="nums">5</button>
                     <button class="nums">6</button>
-                    <button class="operator-buttons">-</button>
+                    <button class="operator-buttons operator" id="-">-</button>
                 </div>
 
                 <div class="rows">
                     <button class="nums">1</button>
                     <button class="nums">2</button>
                     <button class="nums">3</button>
-                    <button class="operator-buttons">+</button>
+                    <button class="operator-buttons operator" id="+">+</button>
                 </div>
 
                 <div class="rows">
                     <button class="flex-2 nums">0</button>
-                    <button>.</button>
-                    <button class="operator-buttons">=</button>
+                    <button id="dotBtn">.</button>
+                    <button class="operator-buttons" id="result">=</button>
                 </div>
             </div>
         </div>
