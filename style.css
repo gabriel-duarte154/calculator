@@ -1,10 +1,12 @@
 @charset  "UTF-8";
 
 :root {
-    --background: #161622;
-    --color1: #309BFF;
-    --color2: #3F7DE8;
-    --color3: #6D94CE;
+    --calculator: #161622;
+    --operatorBtns: #309BFF;
+    --btnsShadow: #3F7DE8;
+    --btnsHover: #524f4f;
+    --buttons: #35355a;
+    --screen: #e5e4e6;
 }
 
 * {
@@ -15,23 +17,23 @@
 }
 
 .main {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(202, 198, 198);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
     padding: 5px;
+    background-color: rgb(202, 198, 198);
 }
 
 .calculator-container {
-    background-color: var(--background);
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 360px;
     border-radius: 5px;
-    flex-direction: column;
     padding: 10px;
+    background-color: var(--calculator);
     box-shadow: 2px 2px 10px  black;
 }
 
@@ -42,18 +44,18 @@
     align-items: flex-end;
     width: 100%;
     font-size: 2em;
-    background-color: #e5e4e6;
+    background-color: var(--screen);
     margin-bottom: 10px;
     border-radius: 5px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.479);
     padding: 0 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.479);
 }
 
 .output > #outputHold {
     
     height: 50px;
     font-size: 0.5em;
-    color: rgb(82, 79, 79);
+    color: var(--btnsHover);
 }
 
 .output > #outputCurrent {
@@ -66,14 +68,15 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 10px;
+    gap: 15px;
     padding: 5px;
 }
 
 .buttons-container > .rows {
     display: flex;
-    gap: 20px;
     align-items: center;
+    box-sizing: content-box;
+    gap: 20px;
 }
 
 .rows > button {
@@ -81,31 +84,77 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    border-radius: 5px;
     height: 70px;
+    border-radius: 5px;
     font-size: 1.8em;
     background-color: transparent;
     color: #e5e4e3;
+    border: none;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
-    border: none;
-    box-shadow: 1px 1px 3px var(--color2);
+    box-shadow: 1px 1px 3px var(--btnsShadow);
 }
 
 .rows > .operator-buttons {
-    color: var(--color1);
+    color: var(--operatorBtns);
     font-size: bolder;
 }
 
 .rows > button.flex-2 {
     flex: 2;
+    padding: 10px;
 }
 
 button:hover {
-    background-color: #35355a;
+    background-color: var(--buttons);
 }
 
 button:active {
    transform: scale(0.95);
-   box-shadow: 0px 0px 2px var(--color2);
+   box-shadow: 0px 0px 2px var(--btnsShadow);
+}
+
+footer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+footer > a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+footer  img {
+    height: 35px;
+    animation: reverseSpin 1s ease-in-out reverse;
+}
+
+footer img:hover {
+    animation: spin 1s ease-in-out ;
+}
+
+@keyframes reverseSpin {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
 }
